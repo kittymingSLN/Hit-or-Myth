@@ -334,7 +334,7 @@ about **−10.94** — the opposite direction of the alternative. The resulting
 <iframe src="assets/fairness-permutation.html" width="100%" height="500" frameborder="0"></iframe>
 
 In other words, we find no evidence that the model is unfair against classical
-songs. If anything, it predicts classical popularity *more* accurately, ikely
+songs. If anything, it predicts classical popularity *more* accurately, likely
 because classical tracks cluster at the low end of the popularity scale, making them
 easier to predict.
 
