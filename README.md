@@ -27,7 +27,7 @@ identifying metadata (track name, artist, album, release date) alongside a set o
 numeric audio features that Spotify computes automatically from the audio signal.
 To keep the analysis focused and the genres musically distinct, we restrict
 attention to five genres — **pop, rock, hip-hop, classical, and edm** — with 1,000
-tracks each, for **5,000 rows total**. These five differ substantially in rhythm,
+tracks each, for 5,000 rows total. These five differ substantially in rhythm,
 instrumentation, production style, and emotional tone, which makes them ideal for
 comparing feature distributions.
 
@@ -74,7 +74,7 @@ generated:
 
 **A note on `tempo`.** About 20% of `tempo` values are missing. We deliberately do
 **not** drop or impute these rows here, because the missingness of `tempo` is the
-subject of the next section — so we keep the `NaN`s intact.
+subject of the next section, so we keep the `NaN`s intact.
 
 **A note on duplicates.** Because the dataset has one row per (track, genre), a
 song that Spotify tags with multiple genres can appear more than once. For a
@@ -108,8 +108,8 @@ and only a small number of tracks are highly popular.
 <iframe src="assets/popularity-by-happiness.html" width="100%" height="500" frameborder="0"></iframe>
 
 When we split tracks into "Happier" and "Sadder" groups, the two popularity
-distributions look almost identical — an early hint that valence alone may not
-separate popular songs from unpopular ones.
+distributions look almost identical. This is an early hint that valence alone may
+not separate popular songs from unpopular ones.
 
 <iframe src="assets/valence-by-genre.html" width="100%" height="500" frameborder="0"></iframe>
 
@@ -133,7 +133,7 @@ highest acousticness, while EDM and hip-hop are high-energy:
 
 This table is significant because it shows the genres are genuinely distinct
 audio "profiles." Pop is the most popular on average despite only middling valence,
-and classical — the saddest and most acoustic genre — is the least popular. That
+and classical, the saddest and most acoustic genre, is the least popular. That
 mismatch between valence and popularity foreshadows our hypothesis-test result.
 
 ---
@@ -148,8 +148,8 @@ tempo from an automated beat-tracking algorithm, so whether a value gets recorde
 depends on properties of the audio itself: beat tracking tends to fail on music
 with a weak or ambiguous pulse (ambient, classical, solo piano) and succeeds
 easily on music with a strong, regular beat (EDM, metal). This makes the
-missingness of `tempo` most likely **MAR** — explained by other observed audio
-features such as energy and acousticness — rather than NMAR, which would require
+missingness of `tempo` most likely **MAR**, explained by other observed audio
+features such as energy and acousticness, rather than NMAR, which would require
 the missingness to depend on the hidden tempo value itself.
 
 We cannot fully rule out NMAR without additional data from Spotify's pipeline,
@@ -178,7 +178,7 @@ mean duration is well inside the null distribution, with **p ≈ 0.50**. We fail
 reject the null: there is no evidence that whether `tempo` is missing depends on how
 long a track is.
 
-Together these results support our reasoning that `tempo` is **MAR** — its
+Together these results support our reasoning that `tempo` is **MAR**. Its
 missingness is explained by observed audio features like energy, not by the hidden
 tempo value itself, and not by unrelated metadata like duration.
 
@@ -198,24 +198,24 @@ with its popularity?
   and `popularity`. This is a natural choice because both variables are continuous
   and we are asking about a monotonic association between them; r directly measures
   the strength and direction of that linear relationship.
-- **Significance level:** alpha = 0.05.
+- **Significance level:** α = 0.05.
 - **Method:** a permutation test. Under H₀, valence and popularity are unrelated,
   so we approximate the null distribution of r by repeatedly shuffling the
   `popularity` column and recomputing the correlation.
 
-The observed correlation is **r ≈ 0.009** — essentially zero — with a two-sided
+The observed correlation is **r ≈ 0.009**, essentially zero, with a two-sided
 **p-value ≈ 0.52**.
 
 <iframe src="assets/permtest-valence-pop.html" width="100%" height="500" frameborder="0"></iframe>
 
 Since p ≈ 0.52 is far larger than 0.05, we **fail to reject the null hypothesis**.
 We have no evidence that valence and popularity are related. (Failing to reject the
-null is not the same as proving the two are unrelated — it only means we found no
+null is not the same as proving the two are unrelated. It only means we found no
 convincing evidence of a relationship.) Popularity is likely driven much more by
-factors outside the audio signal — artist fame, playlist placement, marketing —
-than by a song's emotional tone. This finding directly motivates our prediction
-problem: rather than expecting valence to drive popularity, we ask how well the
-*full* set of audio features can predict it.
+factors outside the audio signal, such as artist fame, playlist placement, and
+marketing, than by a song's emotional tone. This finding directly motivates our
+prediction problem: rather than expecting valence to drive popularity, we ask how
+well the full set of audio features can predict it.
 
 ---
 
@@ -227,11 +227,10 @@ carry any predictive signal:
 
 > **Can we predict a track's `popularity` score from its audio features?**
 
-- **Problem type:** **regression** — the response is a continuous score from 0 to 100.
+- **Problem type:** **regression**, since the response is a continuous score from 0 to 100.
 - **Response variable:** `popularity`. We chose it because it is the outcome at the
   heart of our original question ("what makes a song popular?"), and predicting it
-  lets us quantify exactly how much of popularity the audio signal can — and cannot —
-  explain.
+  lets us quantify exactly how much of popularity the audio signal can and cannot explain.
 - **Features available at "time of prediction":** only intrinsic audio
   characteristics of the track — `danceability`, `energy`, `acousticness`,
   `speechiness`, `instrumentalness`, `valence`, `loudness`, `liveness` (plus
@@ -240,11 +239,11 @@ carry any predictive signal:
   exclude anything that is a *consequence* of popularity (e.g., follower counts) and
   any free-text identifier fields.
 - **Evaluation metric:** **RMSE (root mean squared error)**. RMSE is the standard,
-  interpretable error measure for regression — it reports the typical prediction
-  error in the same units as popularity (points on the 0–100 scale). We prefer it
-  over R² as the headline metric because RMSE is directly comparable between the
-  baseline and final models and is easy to interpret. We also report R² as a
-  secondary measure of variance explained.
+interpretable error measure for regression, reporting the typical prediction
+error in the same units as popularity (points on the 0 to 100 scale). We prefer it
+over R² as the headline metric because RMSE is directly comparable between the
+baseline and final models and is easy to interpret. We also report R² as a
+secondary measure of variance explained.
 
 ---
 
@@ -324,7 +323,7 @@ it predict popularity worse for one kind of music than another?
 - **Alternative hypothesis:** The model performs *worse* for classical songs — its
   RMSE for classical songs is higher than for non-classical songs.
 - **Test statistic:** RMSE(Classical) − RMSE(Non-classical).
-- **Significance level:** $\alpha = 0.05$.
+- **Significance level:** α = 0.05.
 
 The permutation test holds the fitted final model fixed and shuffles only the group
 labels 5,000 times. The observed RMSE for classical songs (**14.45**) is actually
