@@ -259,7 +259,7 @@ an **R² of only 0.04**. For reference, naively predicting the mean popularity f
 every track gives an RMSE of **33.10**, so the baseline barely improves on simply
 guessing the mean.
 
-Is this a good model? **No** — but that is an expected and informative result. It is
+Is this a good model? **No**, but that is an expected and informative result. It is
 consistent with what we found in the hypothesis test: audio features have very
 little *linear* relationship with popularity, so a two-feature linear model cannot
 explain much variance. It is still a legitimate baseline to improve upon, which we
@@ -288,7 +288,7 @@ new features**, each motivated by the data generating process:
   from melodic ones, and this ratio encodes that distinction.
 
 These are good features because they encode *domain knowledge* about how popularity
-and production interact, rather than blindly transforming columns — for example,
+and production interact, rather than blindly transforming columns. For example,
 `release_age` captures the real-world fact that the popularity score reflects recent
 listening.
 
@@ -311,7 +311,7 @@ while no *single* feature predicts popularity, the audio features *together*
 
 ## Fairness Analysis
 
-Finally, we ask whether the final model performs equally well across genres — does
+Finally, we ask whether the final model performs equally well across genres. Does
 it predict popularity worse for one kind of music than another?
 
 - **Group X:** classical songs.
@@ -334,7 +334,7 @@ about **−10.94** — the opposite direction of the alternative. The resulting
 <iframe src="assets/fairness-permutation.html" width="100%" height="500" frameborder="0"></iframe>
 
 In other words, we find no evidence that the model is unfair against classical
-songs. If anything, it predicts classical popularity *more* accurately — likely
+songs. If anything, it predicts classical popularity *more* accurately, ikely
 because classical tracks cluster at the low end of the popularity scale, making them
 easier to predict.
 
