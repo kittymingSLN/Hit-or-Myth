@@ -44,7 +44,7 @@ The columns most relevant to our question are:
 | `duration_ms`, `explicit`, `release_date` | Track metadata. |
 
 
-Why should you care? If emotional tone really did predict popularity, that would
+Why should we care? If emotional tone really did predict popularity, that would
 be a simple, interpretable lever for anyone making or curating music. As we'll
 see, the real story turns out to be more nuanced.
 
@@ -189,18 +189,18 @@ tempo value itself, and not by unrelated metadata like duration.
 We test our central question directly: is a song's happiness (valence) associated
 with its popularity?
 
-- **Null hypothesis ($H_0$):** There is no association between song valence and
+- **Null hypothesis (H₀):** There is no association between song valence and
   Spotify popularity across the selected genres. The true correlation is 0, and any
   observed correlation is due to chance.
-- **Alternative hypothesis ($H_1$):** Songs with higher valence tend to have higher
+- **Alternative hypothesis (H₁):** Songs with higher valence tend to have higher
   popularity (a positive association).
-- **Test statistic:** the **Pearson correlation coefficient** $r$ between `valence`
+- **Test statistic:** the **Pearson correlation coefficient** r between `valence`
   and `popularity`. This is a natural choice because both variables are continuous
-  and we are asking about a monotonic association between them; $r$ directly measures
+  and we are asking about a monotonic association between them; r directly measures
   the strength and direction of that linear relationship.
-- **Significance level:** $\alpha = 0.05$.
-- **Method:** a permutation test. Under $H_0$, valence and popularity are unrelated,
-  so we approximate the null distribution of $r$ by repeatedly shuffling the
+- **Significance level:** alpha = 0.05.
+- **Method:** a permutation test. Under H₀, valence and popularity are unrelated,
+  so we approximate the null distribution of r by repeatedly shuffling the
   `popularity` column and recomputing the correlation.
 
 The observed correlation is **r ≈ 0.009** — essentially zero — with a two-sided
