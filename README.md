@@ -21,7 +21,7 @@ cheerful song, while lower valence means a sadder, more negative one. We compare
 valence against Spotify's **popularity** score to ask whether the emotional
 character of music is associated with how popular it becomes.
 
-**The data.** The full dataset (`music_tracks.csv`) contains **114,000 tracks**
+**The data.** The full dataset (`music_tracks.csv`) contains 114,000 tracks
 spanning 114 genres, with one row per (track, genre) pairing. Each row records
 identifying metadata (track name, artist, album, release date) alongside a set of
 numeric audio features that Spotify computes automatically from the audio signal.
@@ -42,6 +42,7 @@ The columns most relevant to our question are:
 | `acousticness` | Confidence the track is acoustic, 0.0–1.0. |
 | `danceability`, `tempo`, `loudness`, `speechiness`, `instrumentalness`, `liveness` | Additional audio features used for modeling and missingness analysis. |
 | `duration_ms`, `explicit`, `release_date` | Track metadata. |
+
 
 Why should you care? If emotional tone really did predict popularity, that would
 be a simple, interpretable lever for anyone making or curating music. As we'll
